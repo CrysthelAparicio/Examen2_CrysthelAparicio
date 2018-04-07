@@ -10,6 +10,14 @@ import java.util.Date;
 import javax.swing.Icon;
 
 public class Usuarios implements Serializable {
+
+    static void add(Usuarios u) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    static void remove(Usuarios u) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     private String nombreCompleto;
     private String correoElectronico;
     private Date fecha;

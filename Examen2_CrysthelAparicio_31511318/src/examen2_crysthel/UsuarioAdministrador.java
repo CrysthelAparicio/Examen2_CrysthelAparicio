@@ -14,7 +14,10 @@ public class UsuarioAdministrador extends Usuarios {
     public UsuarioAdministrador(String nombreCompleto, String correoElectronico, Date fecha, String nombreUsuario, String contraseña, Icon foto, boolean bloqueado) {
         super(nombreCompleto, correoElectronico, fecha, nombreUsuario, contraseña, foto, bloqueado);
     }
+
+   
+    }
+
+
     
-    
-    
-}
+   

@@ -39,23 +39,23 @@ public class Principal extends javax.swing.JFrame {
     ArrayList<Usuarios> usuarios = new ArrayList();
     ArrayList<Problemas> problemas = new ArrayList();
     ArrayList<Respuestas> respuestas = new ArrayList();
-    
+
     ArrayList<Publicaciones> publicacion = new ArrayList();
     ArrayList<Object> comentarios = new ArrayList();
-    
+
     AdministradorUsuarioNormal adminUsuarioNormal = new AdministradorUsuarioNormal("./UsuarioNormal.cbm");
     AdministradorUsuarioAdmin adminUsuarioAdmin = new AdministradorUsuarioAdmin("./UsuarioAdministrador.cbm");
     admin_problemas adminProblemas = new admin_problemas("./AdministrarProblemas.bin");
     admin_comentarios adminComentarios = new admin_comentarios("./AdministrarComentarios.bin");
     admin_respuestas adminRespuestas = new admin_respuestas("./AdministrarRespuestas.bin");
-    
+
     File Archivo;
 
     /**
      * Creates new form Principal
      */
     public Principal() {
-        
+
         adminProblemas.cargarArchivo();
         adminProblemas.escribirArchivo();
         adminRespuestas.cargarArchivo();
@@ -64,7 +64,7 @@ public class Principal extends javax.swing.JFrame {
         adminUsuarioAdmin.escrbirArchivo();
         adminUsuarioNormal.cargarArchivo();
         adminUsuarioNormal.escrbirArchivo();
-        
+
         initComponents();
     }
 
@@ -163,6 +163,11 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         ta_comentario = new javax.swing.JTextArea();
         jButton3 = new javax.swing.JButton();
+        jPanel9 = new javax.swing.JPanel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        jtree_publicaciones = new javax.swing.JTree();
+        jScrollPane13 = new javax.swing.JScrollPane();
+        jtree_listaPublicaciones = new javax.swing.JTree();
         jScrollPane5 = new javax.swing.JScrollPane();
         texta1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -181,6 +186,8 @@ public class Principal extends javax.swing.JFrame {
         agregar = new javax.swing.JMenuItem();
         eliminar = new javax.swing.JMenuItem();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        pp2 = new javax.swing.JPopupMenu();
+        eliminarpubli = new javax.swing.JMenuItem();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -845,6 +852,44 @@ public class Principal extends javax.swing.JFrame {
 
         jTabbedPane6.addTab("tab2", jPanel7);
 
+        treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Publicaciones");
+        jtree_publicaciones.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jtree_publicaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtree_publicacionesMouseClicked(evt);
+            }
+        });
+        jScrollPane12.setViewportView(jtree_publicaciones);
+
+        treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Lista de Publicaciones");
+        jtree_listaPublicaciones.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jScrollPane13.setViewportView(jtree_listaPublicaciones);
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                .addGap(70, 70, 70))
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane6.addTab("tab6", jPanel9);
+
         texta1.setColumns(20);
         texta1.setRows(5);
         jScrollPane5.setViewportView(texta1);
@@ -946,6 +991,11 @@ public class Principal extends javax.swing.JFrame {
                 agregarMouseClicked(evt);
             }
         });
+        agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregarActionPerformed(evt);
+            }
+        });
         pp.add(agregar);
 
         eliminar.setText("Eliminar Amigos");
@@ -954,7 +1004,20 @@ public class Principal extends javax.swing.JFrame {
                 eliminarMouseClicked(evt);
             }
         });
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
         pp.add(eliminar);
+
+        eliminarpubli.setText("Eliminar Publis");
+        eliminarpubli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarpubliActionPerformed(evt);
+            }
+        });
+        pp2.add(eliminarpubli);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -1099,16 +1162,24 @@ public class Principal extends javax.swing.JFrame {
             for (int j = 0; j < adminUsuarioNormal.getUsuarioNormal().get(i).getSolicitudes().size(); j++) {
                 if (adminUsuarioNormal.getUsuarioNormal().get(i).getNombreUsuario().equals(tf_usuarioLogIn.getText())) {
                     DefaultMutableTreeNode solicitud;
+                    DefaultMutableTreeNode publicacion;
+
                     DefaultTreeModel modeloarbol = (DefaultTreeModel) jtree_solicitudesAmistad.getModel();
                     DefaultMutableTreeNode raiz = (DefaultMutableTreeNode) modeloarbol.getRoot();
                     solicitud = new DefaultMutableTreeNode(adminUsuarioNormal.getUsuarioNormal().get(i).getSolicitudes().get(j));
                     raiz.add(solicitud);
                     modeloarbol.reload();
+
+                    DefaultTreeModel modeloarbol1 = (DefaultTreeModel) jtree_publicaciones.getModel();
+                    DefaultMutableTreeNode raiz1 = (DefaultMutableTreeNode) modeloarbol.getRoot();
+                    publicacion = new DefaultMutableTreeNode(adminUsuarioNormal.getUsuarioNormal().get(i).getSolicitudes().get(j));
+                    raiz.add(publicacion);
+                    modeloarbol.reload();
                 }
             }
         }
         for (int i = 0; i < adminUsuarioAdmin.getUsuarioAdmin().size(); i++) {
-            if (tf_usuarioLogIn.getText().equals(adminUsuarioAdmin.getUsuarioAdmin().get(i).getNombreUsuario())) {     
+            if (tf_usuarioLogIn.getText().equals(adminUsuarioAdmin.getUsuarioAdmin().get(i).getNombreUsuario())) {
                 if (tf_contraseñaLogIn.getText().equals(adminUsuarioAdmin.getUsuarioAdmin().get(i).getContraseña())) {
                     JOptionPane.showMessageDialog(this, "Bienvenido al Sistema VIP (Administrativo) " + adminUsuarioAdmin.getUsuarioAdmin().get(i).getNombreCompleto());
                     modelo.setRowCount(0);
@@ -1184,7 +1255,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-      File Archivo;
+        File Archivo;
         int cont = 0;
         String path = "";
         if (cont > 0) {
@@ -1256,7 +1327,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-         File Archivo;
+        File Archivo;
         int cont = 0;
         String path = "";
         if (cont > 0) {
@@ -1565,6 +1636,40 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jtree_publicacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtree_publicacionesMouseClicked
+        if (evt.isMetaDown()) {
+            pp2.show(jtree_publicaciones, evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_jtree_publicacionesMouseClicked
+    public void agregarAmigo(UsuarioNormal u) {
+        usuario_normal_actual.add(u);
+    }
+    
+    public void eliminarAmigo(UsuarioNormal u) {
+        UsuarioNormal.remove(u);
+    }
+    
+      public void eliminarPubli(UsuarioNormal u) {
+        UsuarioNormal.remove(u);
+    }
+
+
+    private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
+        usuario_normal_actual.agregarAmigo(usuario_normal_actual);
+        usuario_normal_actual.getListaAmigos().equals(evt);
+    }//GEN-LAST:event_agregarActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+          // TODO add your handling code here:
+        usuario_normal_actual.eliminarAmigo(usuario_normal_actual);
+        usuario_normal_actual.getListaAmigos().equals(evt);
+    }//GEN-LAST:event_eliminarActionPerformed
+
+    private void eliminarpubliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarpubliActionPerformed
+        usuario_normal_actual.eliminarPubli(usuario_normal_actual);
+        usuario_normal_actual.getListaPubli().equals(evt);
+    }//GEN-LAST:event_eliminarpubliActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1619,6 +1724,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private com.toedter.calendar.JDateChooser dt_fechaNacimiento;
     private javax.swing.JMenuItem eliminar;
+    private javax.swing.JMenuItem eliminarpubli;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -1666,9 +1772,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
+    private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1692,9 +1801,12 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JTable jt_solicitudes;
     private javax.swing.JTable jt_usuariosGenerales;
     private javax.swing.JTree jtree_listaAmigos;
+    private javax.swing.JTree jtree_listaPublicaciones;
+    private javax.swing.JTree jtree_publicaciones;
     private javax.swing.JTree jtree_solicitudesAmistad;
     private javax.swing.JLabel lb_fotopapeleta;
     private javax.swing.JPopupMenu pp;
+    private javax.swing.JPopupMenu pp2;
     private javax.swing.JPasswordField ps_contraseña;
     private javax.swing.JRadioButton rb_Administrador;
     private javax.swing.JRadioButton rb_Normal;

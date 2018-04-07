@@ -12,6 +12,11 @@ import javax.swing.Icon;
 
 public class UsuarioNormal extends Usuarios {
 
+    static void add() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     ArrayList<Publicaciones> publicaciones = new ArrayList();
     ArrayList<UsuarioNormal> amigoNormal = new ArrayList();
     ArrayList<Object> solicitudes = new ArrayList();
@@ -20,6 +25,31 @@ public class UsuarioNormal extends Usuarios {
         super(nombreCompleto, correoElectronico, fecha, nombreUsuario, contraseña, foto, bloqueado);
     }
 
+      public void agregarAmigo(UsuarioNormal u) {
+        solicitudes.add(u);
+    }
+
+    public boolean eliminarAmigo(UsuarioNormal u) {
+        boolean flag;
+        flag = solicitudes.addAll(solicitudes);
+        if (flag) {
+            solicitudes.remove(u);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean eliminarPubli(UsuarioNormal u) {
+        boolean flag;
+        flag = publicaciones.addAll(publicaciones);
+        if (flag) {
+            publicaciones.remove(u);
+            return true;
+        } else {
+            return false;
+        }
+    }
     public ArrayList<Publicaciones> getPublicaciones() {
         return publicaciones;
     }
@@ -45,6 +75,14 @@ public class UsuarioNormal extends Usuarios {
     }
 
     void add(UsuarioNormal usuarioNormal) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    Object getListaAmigos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    Object getListaPubli() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
