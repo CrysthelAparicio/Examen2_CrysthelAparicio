@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Examen2;
+package examen2_crysthel;
 
 import java.io.EOFException;
 import java.io.File;
@@ -17,20 +17,21 @@ import java.util.ArrayList;
  *
  * @author COPECO -13
  */
-public class adminComentario {
+public class adminComentarios {
 
-    private ArrayList<Comentario> listas_comentarios = new ArrayList();
+    private ArrayList<Comentarios> listas_comentarios = new ArrayList();
     private File archivo = null;
 
-    public adminComentario(String path) {
+    public adminComentarios(String path) {
         archivo = new File(path);
+
     }
 
-    public ArrayList<Comentario> getListas_comentarios() {
+    public ArrayList<Comentarios> getListas_comentarios() {
         return listas_comentarios;
     }
 
-    public void setListas_comentarios(ArrayList<Comentario> listas_comentarios) {
+    public void setListas_comentarios(ArrayList<Comentarios> listas_comentarios) {
         this.listas_comentarios = listas_comentarios;
     }
 
@@ -41,17 +42,17 @@ public class adminComentario {
     public void setArchivo(File archivo) {
         this.archivo = archivo;
     }
-  
+
     public void cargarArchivo() {
         try {
             listas_comentarios = new ArrayList();
-            Comentario temp;
+            Comentarios temp;
             if (archivo.exists()) {
                 FileInputStream entrada
                         = new FileInputStream(archivo);
                 ObjectInputStream objeto = new ObjectInputStream(entrada);
                 try {
-                    while ((temp = (Comentario) objeto.readObject()) != null) {
+                    while ((temp = (Comentarios) objeto.readObject()) != null) {
                         listas_comentarios.add(temp);
                     }
                 } catch (EOFException e) {
@@ -73,7 +74,7 @@ public class adminComentario {
 
             fw = new FileOutputStream(archivo);
             bw = new ObjectOutputStream(fw);
-            for (Comentario t : listas_comentarios) {
+            for (Comentarios t : listas_comentarios) {
                 bw.writeObject(t);
 
             }

@@ -48,4 +48,8 @@ public class UsuarioNormal extends Usuarios {
         this.solicitudes = solicitudes;
     }
 
+    void add(UsuarioNormal usuarioNormal) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

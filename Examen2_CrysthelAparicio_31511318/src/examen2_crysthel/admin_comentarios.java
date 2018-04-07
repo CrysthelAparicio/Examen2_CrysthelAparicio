@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Examen2;
+package examen2_crysthel;
 
 import java.io.EOFException;
 import java.io.File;
@@ -17,21 +17,22 @@ import java.util.ArrayList;
  *
  * @author COPECO -13
  */
-public class adminProblema {
+public class admin_comentarios {
 
-    private ArrayList<Problema> listas_problema = new ArrayList();
+    private ArrayList<Comentarios> listas_comentarios = new ArrayList();
     private File archivo = null;
 
-    public adminProblema(String path) {
+    public admin_comentarios(String path) {
         archivo = new File(path);
+
     }
 
-    public ArrayList<Problema> getListas_problema() {
-        return listas_problema;
+    public ArrayList<Comentarios> getListas_comentarios() {
+        return listas_comentarios;
     }
 
-    public void setListas_problema(ArrayList<Problema> listas_problema) {
-        this.listas_problema = listas_problema;
+    public void setListas_comentarios(ArrayList<Comentarios> listas_comentarios) {
+        this.listas_comentarios = listas_comentarios;
     }
 
     public File getArchivo() {
@@ -42,17 +43,21 @@ public class adminProblema {
         this.archivo = archivo;
     }
 
+    public void set_comentarios(Comentarios a) {
+        listas_comentarios.add(a);
+    }
+
     public void cargarArchivo() {
         try {
-            listas_problema = new ArrayList();
-            Problema temp;
+            listas_comentarios = new ArrayList();
+            Comentarios temp;
             if (archivo.exists()) {
                 FileInputStream entrada
                         = new FileInputStream(archivo);
                 ObjectInputStream objeto = new ObjectInputStream(entrada);
                 try {
-                    while ((temp = (Problema) objeto.readObject()) != null) {
-                        listas_problema.add(temp);
+                    while ((temp = (Comentarios) objeto.readObject()) != null) {
+                        listas_comentarios.add(temp);
                     }
                 } catch (EOFException e) {
                     //ENCONTRO EL FINAL DEL ARCHIVO
@@ -73,7 +78,7 @@ public class adminProblema {
 
             fw = new FileOutputStream(archivo);
             bw = new ObjectOutputStream(fw);
-            for (Problema t : listas_problema) {
+            for (Comentarios t : listas_comentarios) {
                 bw.writeObject(t);
 
             }

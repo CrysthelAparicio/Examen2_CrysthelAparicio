@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Examen2;
+package examen2_crysthel;
 
 import java.io.EOFException;
 import java.io.File;
@@ -17,20 +17,22 @@ import java.util.ArrayList;
  *
  * @author COPECO -13
  */
-public class adminAdministrador {
-    private ArrayList<UsuarioAdministrador> listaAdministrador;
+public class admin_respuestas {
+
+    private ArrayList<Respuestas> listas_respuestas = new ArrayList();
     private File archivo = null;
 
-    public adminAdministrador(String path) {
-         archivo = new File(path);
+    public admin_respuestas(String path) {
+        archivo = new File(path);
+
     }
 
-    public ArrayList<UsuarioAdministrador> getListaAdministrador() {
-        return listaAdministrador;
+    public ArrayList<Respuestas> getListas_respuestas() {
+        return listas_respuestas;
     }
 
-    public void setListaAdministrador(ArrayList<UsuarioAdministrador> listaAdministrador) {
-        this.listaAdministrador = listaAdministrador;
+    public void setListas_respuestas(ArrayList<Respuestas> listas_respuestas) {
+        this.listas_respuestas = listas_respuestas;
     }
 
     public File getArchivo() {
@@ -41,17 +43,21 @@ public class adminAdministrador {
         this.archivo = archivo;
     }
 
-     public void cargarArchivo() {
+    public void set_respuestas(Respuestas a) {
+        listas_respuestas.add(a);
+    }
+
+    public void cargarArchivo() {
         try {
-            listaAdministrador = new ArrayList();
-            UsuarioAdministrador temp;
+            listas_respuestas = new ArrayList();
+            Respuestas temp;
             if (archivo.exists()) {
                 FileInputStream entrada
                         = new FileInputStream(archivo);
                 ObjectInputStream objeto = new ObjectInputStream(entrada);
                 try {
-                    while ((temp = (UsuarioAdministrador) objeto.readObject()) != null) {
-                        listaAdministrador.add(temp);
+                    while ((temp = (Respuestas) objeto.readObject()) != null) {
+                        listas_respuestas.add(temp);
                     }
                 } catch (EOFException e) {
                     //ENCONTRO EL FINAL DEL ARCHIVO
@@ -72,7 +78,7 @@ public class adminAdministrador {
 
             fw = new FileOutputStream(archivo);
             bw = new ObjectOutputStream(fw);
-            for (UsuarioAdministrador t : listaAdministrador) {
+            for (Respuestas t : listas_respuestas) {
                 bw.writeObject(t);
 
             }
@@ -87,6 +93,4 @@ public class adminAdministrador {
             }
         }
     }
-    
-    
 }
