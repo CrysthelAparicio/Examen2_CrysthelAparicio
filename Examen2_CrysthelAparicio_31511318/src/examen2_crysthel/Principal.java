@@ -16,6 +16,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -30,12 +31,20 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class Principal extends javax.swing.JFrame {
 
+    adminProblemas admiP = new adminProblemas("./AdministrarProblemas.cbm");
+
     UsuarioNormal usuario_normal_actual;
     UsuarioAdministrador usuario_admin_actual;
+
     ArrayList<Publicaciones> publicacion = new ArrayList();
     ArrayList<Object> comentarios = new ArrayList();
+    
     AdministradorUsuarioNormal adminUsuarioNormal = new AdministradorUsuarioNormal("./UsuarioNormal.cbm");
     AdministradorUsuarioAdmin adminUsuarioAdmin = new AdministradorUsuarioAdmin("./UsuarioAdministrador.cbm");
+    admin_problemas adminProblemas = new admin_problemas("./AdministrarProblemas.bin");
+    admin_comentarios adminComentarios = new admin_comentarios("./AdministrarComentarios.bin");
+    admin_respuestas adminRespuestas = new admin_respuestas("./AdministrarRespuestas.bin");
+    
     File Archivo;
 
     /**
@@ -119,6 +128,9 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane10 = new javax.swing.JScrollPane();
         jtree_listaAmigos = new javax.swing.JTree();
         jPanel5 = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        jl_p = new javax.swing.JList<>();
         jPanel7 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         tf_id = new javax.swing.JTextField();
@@ -158,6 +170,7 @@ public class Principal extends javax.swing.JFrame {
         pp = new javax.swing.JPopupMenu();
         agregar = new javax.swing.JMenuItem();
         eliminar = new javax.swing.JMenuItem();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -626,18 +639,41 @@ public class Principal extends javax.swing.JFrame {
 
         jTabbedPane6.addTab("tab4", jPanel4);
 
+        jButton5.setText("ver");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jl_p.setModel(new DefaultListModel()
+        );
+        jScrollPane11.setViewportView(jl_p);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 847, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 827, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jButton5)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 343, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton5)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        jTabbedPane6.addTab("tab5", jPanel5);
+        jTabbedPane6.addTab("Ver publis", jPanel5);
 
         jLabel14.setText("ID");
 
@@ -647,10 +683,13 @@ public class Principal extends javax.swing.JFrame {
         ta_mensaje.setRows(5);
         jScrollPane8.setViewportView(ta_mensaje);
 
+        buttonGroup2.add(bt_publico);
         bt_publico.setText("publico");
 
+        buttonGroup2.add(bt_privado);
         bt_privado.setText("privado");
 
+        buttonGroup2.add(bt_amigos);
         bt_amigos.setText("amigos");
 
         bt_problema.setText("problemas");
@@ -970,12 +1009,11 @@ public class Principal extends javax.swing.JFrame {
                 adminUsuarioNormal.escrbirArchivo();
                 Image img = Toolkit.getDefaultToolkit().createImage("./default.jpeg").getScaledInstance(lb_fotopapeleta.getWidth(), lb_fotopapeleta.getHeight(), Image.SCALE_DEFAULT);
                 lb_fotopapeleta.setIcon(new ImageIcon(img));
-                JOptionPane.showMessageDialog(null, "Se ha guardado el usuario normal correctamente. ");
+                JOptionPane.showMessageDialog(null, "Se ha guardado un USUARIO NORMAL. ");
                 tf_nombre.setText("");
                 tf_correoElectronico.setText("");
                 tf_usuario.setText("");
                 ps_contraseña.setText("");
-
             }
             if (rb_Administrador.isSelected()) {
                 UsuarioAdministrador usuarioM = new UsuarioAdministrador(tf_nombre.getText(), tf_correoElectronico.getText(), dt_fechaNacimiento.getDate(),
@@ -984,7 +1022,7 @@ public class Principal extends javax.swing.JFrame {
                 adminUsuarioAdmin.escrbirArchivo();
                 Image img = Toolkit.getDefaultToolkit().createImage("./default.jpeg").getScaledInstance(lb_fotopapeleta.getWidth(), lb_fotopapeleta.getHeight(), Image.SCALE_DEFAULT);
                 lb_fotopapeleta.setIcon(new ImageIcon(img));
-                JOptionPane.showMessageDialog(null, "Se ha guardado el usuario administrativo correctamente. ");
+                JOptionPane.showMessageDialog(null, "Se ha guardado un USUARIO ADMINISTRATIVO. ");
                 tf_nombre.setText("");
                 tf_correoElectronico.setText("");
                 tf_usuario.setText("");
@@ -992,7 +1030,6 @@ public class Principal extends javax.swing.JFrame {
             }
         } catch (Exception e) {
         }
-
     }//GEN-LAST:event_boton_registrarseMouseClicked
 
     private void bt_seleccionarimagenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_seleccionarimagenMouseClicked
@@ -1021,7 +1058,7 @@ public class Principal extends javax.swing.JFrame {
         for (int i = 0; i < adminUsuarioNormal.getUsuarioNormal().size(); i++) {
             if (tf_usuarioLogIn.getText().equals(adminUsuarioNormal.getUsuarioNormal().get(i).getNombreUsuario())) {
                 if (tf_contraseñaLogIn.getText().equals(adminUsuarioNormal.getUsuarioNormal().get(i).getContraseña())) {
-                    JOptionPane.showMessageDialog(this, "Bienvenido al sistema " + adminUsuarioNormal.getUsuarioNormal().get(i).getNombreCompleto());
+                    JOptionPane.showMessageDialog(this, "Bienvenido a mi Examen " + adminUsuarioNormal.getUsuarioNormal().get(i).getNombreCompleto());
 
                     jd_login.dispose();
                     modelo2.setRowCount(0);
@@ -1065,7 +1102,7 @@ public class Principal extends javax.swing.JFrame {
                 System.out.println("Correcto1");
                 if (tf_contraseñaLogIn.getText().equals(adminUsuarioAdmin.getUsuarioAdmin().get(i).getContraseña())) {
                     System.out.println("Correcto2");
-                    JOptionPane.showMessageDialog(this, "Bienvenido al sistema administrativo " + adminUsuarioAdmin.getUsuarioAdmin().get(i).getNombreCompleto());
+                    JOptionPane.showMessageDialog(this, "Bienvenido al Sistema VIP (Administrativo) " + adminUsuarioAdmin.getUsuarioAdmin().get(i).getNombreCompleto());
                     modelo.setRowCount(0);
                     for (int j = 0; j < adminUsuarioNormal.getUsuarioNormal().size(); j++) {
                         String[] newrow = {adminUsuarioNormal.getUsuarioNormal().get(j).getNombreCompleto(), adminUsuarioNormal.getUsuarioNormal().get(j).getCorreoElectronico(),
@@ -1252,14 +1289,11 @@ public class Principal extends javax.swing.JFrame {
                 String usuario = JOptionPane.showInputDialog(null, "Ingrese el nuevo nombre de usuario a agregarse");
                 String correo = JOptionPane.showInputDialog(null, "Ingrese el nuevo correo de usuario a agregarse");
                 String contra = JOptionPane.showInputDialog(null, "Ingrese la nueva contraseña de usuario");
-
                 modelo.setValueAt(nombre, jt_info.getSelectedRow(), 0);
                 modelo.setValueAt(correo, jt_info.getSelectedRow(), 1);
                 modelo.setValueAt(usuario, jt_info.getSelectedRow(), 3);
                 modelo.setValueAt(contra, jt_info.getSelectedRow(), 4);
-
                 jt_info.setModel(modelo);
-
                 adminUsuarioNormal.cargarArchivo();
                 for (int i = 0; i < adminUsuarioNormal.getUsuarioNormal().size(); i++) {
                     if (adminUsuarioNormal.getUsuarioNormal().get(i).getNombreCompleto().equals(nombreModificar)) {
@@ -1272,9 +1306,7 @@ public class Principal extends javax.swing.JFrame {
                 adminUsuarioNormal.escrbirArchivo();
                 JOptionPane.showMessageDialog(null, "Se ha modificado el usuario correctamente. ");
             }
-
         } catch (Exception e) {
-
         }
     }//GEN-LAST:event_btnModificarMouseClicked
 
@@ -1301,10 +1333,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        /*
-        // TODO add your handling code here:
-        AdministradorUsuarioAdmin ap = new AdministradorUsuarioAdmin("./usuario_normal.cbm");
-        //ap.cargarArchivo();
+
+        adminUsuarioNormal.cargarArchivo();
         String p = "";
         String estado;
         Date f = new Date();
@@ -1317,31 +1347,27 @@ public class Principal extends javax.swing.JFrame {
                 } else {
                     p = "amigos";
                 }
-
             }
-
             if (bt_cerrado.isSelected()) {
                 estado = "cerrado";
             } else {
                 estado = "abierto";
             }
-
             publicacion.add(new Problemas(estado, Integer.parseInt(js_categoria.getValue().toString()), tf_id.getText(), ta_mensaje.getText(), usuario_normal_actual, p, f));
 
             Problemas publi = new Problemas(estado, Integer.parseInt(js_categoria.getValue().toString()), tf_id.getText(), ta_mensaje.getText(), usuario_normal_actual, p, f);
-            admin_problemas ad = new admin_problemas("./problemas.cbm");
-            ad.cargarArchivo();
+            adminProblemas.cargarArchivo();
 
-            ad.set_problemas(publi);
-            ad.escribirArchivo();
-            for (int i = 0; i < ap.getUsuarioAdmin().size(); i++) {
-                if (ap.getUsuarioAdmin().get(i).equals(usuario_normal_actual)) {
-                    ap.getListas_usuario_normal().get(i).setPublicaciones((Publicaciones) publi);
+            adminProblemas.set_problemas(publi);
+            adminProblemas.escribirArchivo();
+            for (int i = 0; i < adminUsuarioNormal.getUsuarioNormal().size(); i++) {
+                if (adminUsuarioNormal.getUsuarioNormal().get(i).equals(usuario_normal_actual)) {
+                    adminUsuarioNormal.getUsuarioNormal().get(i).getPublicaciones().add(publi);
                 }
 
             }
 
-            JOptionPane.showMessageDialog(V, "problema publicado");
+            JOptionPane.showMessageDialog(null, "Problema publicado");
         }
         if (bt_comentario.isSelected()) {
 
@@ -1357,26 +1383,19 @@ public class Principal extends javax.swing.JFrame {
             }
             publicacion.add(new Comentarios(ta_comentario.getText(), tf_id.getText(), ta_mensaje.getText(), usuario_normal_actual, p, f));
             Comentarios comen = new Comentarios(ta_comentario.getText(), tf_id.getText(), ta_mensaje.getText(), usuario_normal_actual, p, f);
-            admin_comentarios ad1 = new admin_comentarios("./comentarios.cbm");
-
+            adminComentarios ad1 = new adminComentarios("./comentarios.cbm");
             ad1.cargarArchivo();
-
             ad1.set_comentarios(comen);
-
             ad1.escribirArchivo();
-
-            for (int i = 0; i < ap.getUsuarioAdmin().size(); i++) {
-                if (ap.getUsuarioAdmin().get(i).equals(usuario_normal_actual)) {
-                    ap.getListas_usuario_normal().get(i).setPublicaciones((Publicaciones) comen);
+            for (int i = 0; i < adminUsuarioNormal.getUsuarioNormal().size(); i++) {
+                if (adminUsuarioNormal.getUsuarioNormal().get(i).equals(usuario_normal_actual)) {
+                    adminUsuarioNormal.getUsuarioNormal().get(i).getPublicaciones().add(comen);
                 }
 
             }
-
-            JOptionPane.showMessageDialog(jd_UsuarioNormal, "comentario publicado");
+            JOptionPane.showMessageDialog(null, "Comentario publicado");
         }
         if (bt_repuestas.isSelected()) {
-            //int calificacion_general, String ID, String mensajes, usuario_normal usuario_autor, String privacidad, Date fecha
-
             if (bt_privado.isSelected()) {
                 p = "privado";
             } else {
@@ -1387,28 +1406,23 @@ public class Principal extends javax.swing.JFrame {
                 }
 
             }
+
             publicacion.add(new Respuestas(Integer.parseInt(js_respuestas.getValue().toString()), tf_id.getText(), ta_mensaje.getText(), usuario_normal_actual, p, f));
             Respuestas res = new Respuestas(Integer.parseInt(js_respuestas.getValue().toString()), tf_id.getText(), ta_mensaje.getText(), usuario_normal_actual, p, f);
-            admin_respuestas ad2 = new admin_respuestas("./respuestas.cbm");
+            adminRespuestas.cargarArchivo();
+            adminRespuestas.set_respuestas(res);
+            adminRespuestas.escribirArchivo();
 
-            ad2.cargarArchivo();
-            ad2.set_respuestas(res);
-            ad2.escribirArchivo();
-
-            for (int i = 0; i < ap.getUsuarioAdmin().size(); i++) {
-                if (ap.getUsuarioAdmin().get(i).equals(usuario_normal_actual)) {
-                    ap.getListas_usuario_normal().get(i).setPublicaciones((Publicaciones) res);
+            for (int i = 0; i < adminUsuarioNormal.getUsuarioNormal().size(); i++) {
+                if (adminUsuarioNormal.getUsuarioNormal().get(i).equals(usuario_normal_actual)) {
+                    adminUsuarioNormal.getUsuarioNormal().get(i).getPublicaciones().add(res);
                 }
             }
-            JOptionPane.showMessageDialog(jd_UsuarioNormal, "respuestas publicado");
+            JOptionPane.showMessageDialog(null, "respuestas publicado");
         }
-/*
-        
-         */
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jtree_solicitudesAmistadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtree_solicitudesAmistadMouseClicked
-
         if (evt.isMetaDown()) {
             pp.show(jtree_solicitudesAmistad, evt.getX(), evt.getY());
         }
@@ -1428,14 +1442,40 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4MouseClicked
 
     private void agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarMouseClicked
-       if (evt.isMetaDown()) {
-           int row = 
+        /*  if (evt.isMetaDown()) {
+            int row = 
         }
+         */
     }//GEN-LAST:event_agregarMouseClicked
 
     private void eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_eliminarMouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        DefaultListModel model = (DefaultListModel) jl_p.getModel();
+        model.removeAllElements();
+        jl_p.setModel(model);
+        admin_comentarios a = new admin_comentarios("./comentarios.cbm");
+        a.cargarArchivo();
+        admin_respuestas b = new admin_respuestas("./respuestas.cbm");
+        b.cargarArchivo();
+        admin_problemas c = new admin_problemas("./problemas.cbm");
+        c.cargarArchivo();
+
+        for (int i = 0; i < a.getListas_comentarios().size(); i++) {
+            model.addElement(a.getListas_comentarios().get(i));
+        }
+        for (int i = 0; i < b.getListas_respuestas().size(); i++) {
+            model.addElement(b.getListas_respuestas().get(i));
+        }
+        for (int i = 0; i < c.getListas_problemas().size(); i++) {
+            model.addElement(c.getListas_problemas().get(i));
+        }
+        jl_p.setModel(model);
+
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1488,12 +1528,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private com.toedter.calendar.JDateChooser dt_fechaNacimiento;
     private javax.swing.JMenuItem eliminar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1538,6 +1580,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1554,6 +1597,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDialog jd_about;
     private javax.swing.JDialog jd_login;
     private javax.swing.JDialog jd_signup;
+    private javax.swing.JList<String> jl_p;
     private javax.swing.JSpinner js_categoria;
     private javax.swing.JSpinner js_respuestas;
     private javax.swing.JTable jt_info;

@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.Icon;
 
-/**
- *
- * @author Jamil
- */
 public class UsuarioNormal extends Usuarios {
 
     ArrayList<Publicaciones> publicaciones = new ArrayList();

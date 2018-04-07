@@ -13,10 +13,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-/**
- *
- * @author Jamil
- */
 public class AdministradorUsuarioAdmin {
 
     ArrayList<UsuarioAdministrador> usuarioAdmin = new ArrayList();

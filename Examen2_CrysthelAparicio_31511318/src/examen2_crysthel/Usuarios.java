@@ -9,10 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.swing.Icon;
 
-/**
- *
- * @author Jamil
- */
 public class Usuarios implements Serializable {
     private String nombreCompleto;
     private String correoElectronico;

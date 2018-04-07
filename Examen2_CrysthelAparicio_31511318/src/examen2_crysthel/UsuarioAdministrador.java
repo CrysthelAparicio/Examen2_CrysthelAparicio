@@ -9,10 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.swing.Icon;
 
-/**
- *
- * @author Jamil
- */
 public class UsuarioAdministrador extends Usuarios {
     
     public UsuarioAdministrador(String nombreCompleto, String correoElectronico, Date fecha, String nombreUsuario, String contraseña, Icon foto, boolean bloqueado) {

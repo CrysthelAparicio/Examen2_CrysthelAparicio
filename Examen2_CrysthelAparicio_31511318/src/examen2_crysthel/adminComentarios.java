@@ -19,13 +19,13 @@ import java.util.ArrayList;
  */
 public class adminComentarios {
 
-    private ArrayList<Comentarios> listas_comentarios = new ArrayList();
-    private File archivo = null;
-
-    public adminComentarios(String path) {
-        archivo = new File(path);
-
-    }
+      private ArrayList<Comentarios> listas_comentarios=new ArrayList();
+    private File archivo=null;
+    
+     public adminComentarios(String path) {
+        archivo=new File(path);
+    
+     }
 
     public ArrayList<Comentarios> getListas_comentarios() {
         return listas_comentarios;
@@ -42,51 +42,54 @@ public class adminComentarios {
     public void setArchivo(File archivo) {
         this.archivo = archivo;
     }
-
-    public void cargarArchivo() {
-        try {
-            listas_comentarios = new ArrayList();
-            Comentarios temp;
-            if (archivo.exists()) {
-                FileInputStream entrada
-                        = new FileInputStream(archivo);
-                ObjectInputStream objeto = new ObjectInputStream(entrada);
-                try {
-                    while ((temp = (Comentarios) objeto.readObject()) != null) {
-                        listas_comentarios.add(temp);
-                    }
-                } catch (EOFException e) {
-                    //ENCONTRO EL FINAL DEL ARCHIVO
-                }
-                objeto.close();
-                entrada.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+       public void set_comentarios(Comentarios a){
+        listas_comentarios.add(a);
     }
-
-    public void escribirArchivo() {
-        FileOutputStream fw = null;
-        ObjectOutputStream bw = null;
-
+    
+    public void cargarArchivo(){
         try {
-
-            fw = new FileOutputStream(archivo);
-            bw = new ObjectOutputStream(fw);
-            for (Comentarios t : listas_comentarios) {
-                bw.writeObject(t);
-
-            }
-            bw.flush();
-
-        } catch (Exception ex) {
-        } finally {
-            try {
-                bw.close();
-                fw.close();
-            } catch (Exception e) {
-            }
-        }
-    }
+         listas_comentarios=new ArrayList();
+         Comentarios temp;
+         if(archivo.exists()){
+             FileInputStream entrada
+                     =new FileInputStream(archivo);
+             ObjectInputStream objeto=new ObjectInputStream(entrada);
+             try {
+                 while((temp=(Comentarios)objeto.readObject())!=null){
+                     listas_comentarios.add(temp);
+                 }
+             } catch (EOFException e) {
+                 //ENCONTRO EL FINAL DEL ARCHIVO
+             }
+             objeto.close();
+             entrada.close();
+         }
+     } catch (Exception e) {
+         e.printStackTrace();
+     }
+ }
+    public void escribirArchivo(){
+         FileOutputStream fw=null;
+     ObjectOutputStream bw=null;
+     
+     try {
+         
+         fw=new FileOutputStream(archivo);
+         bw=new ObjectOutputStream(fw);
+         for (Comentarios t : listas_comentarios) {
+             bw.writeObject(t);
+             
+         }
+         bw.flush();
+         
+         
+     } catch (Exception ex) {
+     }finally{
+         try {
+             bw.close();
+             fw.close();
+         } catch (Exception e) {
+         }
+     }
+ }
 }
