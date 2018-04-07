@@ -36,6 +36,10 @@ public class Principal extends javax.swing.JFrame {
     UsuarioNormal usuario_normal_actual;
     UsuarioAdministrador usuario_admin_actual;
 
+    ArrayList<Usuarios> usuarios = new ArrayList();
+    ArrayList<Problemas> problemas = new ArrayList();
+    ArrayList<Respuestas> respuestas = new ArrayList();
+    
     ArrayList<Publicaciones> publicacion = new ArrayList();
     ArrayList<Object> comentarios = new ArrayList();
     
@@ -51,10 +55,16 @@ public class Principal extends javax.swing.JFrame {
      * Creates new form Principal
      */
     public Principal() {
+        
+        adminProblemas.cargarArchivo();
+        adminProblemas.escribirArchivo();
+        adminRespuestas.cargarArchivo();
+        adminRespuestas.escribirArchivo();
         adminUsuarioAdmin.cargarArchivo();
         adminUsuarioAdmin.escrbirArchivo();
         adminUsuarioNormal.cargarArchivo();
         adminUsuarioNormal.escrbirArchivo();
+        
         initComponents();
     }
 
@@ -1098,10 +1108,8 @@ public class Principal extends javax.swing.JFrame {
             }
         }
         for (int i = 0; i < adminUsuarioAdmin.getUsuarioAdmin().size(); i++) {
-            if (tf_usuarioLogIn.getText().equals(adminUsuarioAdmin.getUsuarioAdmin().get(i).getNombreUsuario())) {
-                System.out.println("Correcto1");
+            if (tf_usuarioLogIn.getText().equals(adminUsuarioAdmin.getUsuarioAdmin().get(i).getNombreUsuario())) {     
                 if (tf_contraseñaLogIn.getText().equals(adminUsuarioAdmin.getUsuarioAdmin().get(i).getContraseña())) {
-                    System.out.println("Correcto2");
                     JOptionPane.showMessageDialog(this, "Bienvenido al Sistema VIP (Administrativo) " + adminUsuarioAdmin.getUsuarioAdmin().get(i).getNombreCompleto());
                     modelo.setRowCount(0);
                     for (int j = 0; j < adminUsuarioNormal.getUsuarioNormal().size(); j++) {
@@ -1176,7 +1184,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        File Archivo;
+      File Archivo;
         int cont = 0;
         String path = "";
         if (cont > 0) {
@@ -1186,10 +1194,18 @@ public class Principal extends javax.swing.JFrame {
             try {
                 fw = new FileOutputStream(Archivo);
                 bw = new ObjectOutputStream(fw);
-                //for (UsuarioNormal l : adminUsuarioNormal) {
-                //  bw.writeObject(l);
-                //}
-
+                for (Usuarios l : usuarios) {
+                    bw.writeObject(l);
+                }
+                for (Publicaciones h : publicacion) {
+                    bw.writeObject(h);
+                }
+                for (Respuestas s : respuestas) {
+                    bw.writeObject(s);
+                }
+                for (Problemas ss : problemas) {
+                    bw.writeObject(ss);
+                }
                 bw.flush();
             } catch (Exception ex) {
             } finally {
@@ -1210,10 +1226,18 @@ public class Principal extends javax.swing.JFrame {
                 try {
                     fw = new FileOutputStream(fs);
                     bw = new ObjectOutputStream(fw);
-
-                    //for (UsuarioNormal l : adminUsuarioNormal) {
-                    //bw.writeObject(l);
-                    //}
+                    for (Usuarios l : usuarios) {
+                        bw.writeObject(l);
+                    }
+                    for (Publicaciones h : publicacion) {
+                        bw.writeObject(h);
+                    }
+                    for (Respuestas s : respuestas) {
+                        bw.writeObject(s);
+                    }
+                    for (Problemas ss : problemas) {
+                        bw.writeObject(ss);
+                    }
                     bw.flush();
                 } catch (Exception ex) {
                 } finally {
@@ -1232,7 +1256,71 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
+         File Archivo;
+        int cont = 0;
+        String path = "";
+        if (cont > 0) {
+            Archivo = new File(path);
+            FileOutputStream fw = null;
+            ObjectOutputStream bw = null;
+            try {
+                fw = new FileOutputStream(Archivo);
+                bw = new ObjectOutputStream(fw);
+                for (Usuarios l : usuarios) {
+                    bw.writeObject(l);
+                }
+                for (Publicaciones h : publicacion) {
+                    bw.writeObject(h);
+                }
+                for (Respuestas s : respuestas) {
+                    bw.writeObject(s);
+                }
+                for (Problemas ss : problemas) {
+                    bw.writeObject(ss);
+                }
+                bw.flush();
+            } catch (Exception ex) {
+            } finally {
+                try {
+                    bw.close();
+                    fw.close();
+                } catch (Exception ex) {
+                }
+            }
+        } else {
+            JFileChooser fcs = new JFileChooser();
+            int aprove = fcs.showSaveDialog(this);
+            if (aprove == JFileChooser.APPROVE_OPTION) {
+                File fs = fcs.getSelectedFile();
+                path = fs.getAbsolutePath();
+                FileOutputStream fw = null;
+                ObjectOutputStream bw = null;
+                try {
+                    fw = new FileOutputStream(fs);
+                    bw = new ObjectOutputStream(fw);
+                    for (Usuarios l : usuarios) {
+                        bw.writeObject(l);
+                    }
+                    for (Publicaciones h : publicacion) {
+                        bw.writeObject(h);
+                    }
+                    for (Respuestas s : respuestas) {
+                        bw.writeObject(s);
+                    }
+                    for (Problemas ss : problemas) {
+                        bw.writeObject(ss);
+                    }
+                    bw.flush();
+                } catch (Exception ex) {
+                } finally {
+                    try {
+                        bw.close();
+                        fw.close();
+                    } catch (Exception ex) {
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
